@@ -1,19 +1,3 @@
-<?php include 'conn.php'; ?>
-
-<?php
-// A sessão precisa ser iniciada em cada página diferente
-if (!isset($_SESSION))
-    session_start();
-
-// Verifica se não há a variável da sessão que identifica o usuário
-if (!isset($_SESSION['Matricula'])) {
-    // Destrói a sessão por segurança
-    session_destroy();
-    // Redireciona o visitante de volta pro login
-    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
-    exit;
-}
-?>
 <!doctype html>
 
 
@@ -44,6 +28,10 @@ if (!isset($_SESSION['Matricula'])) {
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     </head>
     <body>
@@ -110,76 +98,72 @@ if (!isset($_SESSION['Matricula'])) {
                                         <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
 
 
-                                            <?php
-                                            $codProf = $_POST['professor'];
-                                            $dataEmp = $_POST['data'];
-                                            $horaEmp = $_POST['hora'];
-                                            $status = $_POST['status'];
-                                            $coordenacao = $_POST['coordenacao'];
-                                            $nome = $_POST['nome'];
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Nome</th>
+                                                        <th>Modelo</th>
+                                                        <th>Marca</th>
+                                                        <th>Data de Aquisiçao</th>
 
-                                            echo "$dataEmp <br></br>";
+                                                    </tr>
+                                                </thead>
 
-                                            echo "$codProf <br></br>";
+                                                <tbody>
+                                                    <tr>
 
-                                            echo "$coordenacao <br></br>";
 
-                                            echo "$nome <br></br>";
+                                                        <?php
+                                                        $host = "localhost";
+                                                        $user = "root";
+                                                        $pass = "";
+                                                        $banco = "BANCORESERVA";
 
-                                            $host = "localhost";
-                                            $user = "root";
-                                            $pass = "";
-                                            $banco = "BANCORESERVA";
+                                                        $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
 
-                                            $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+                                                        $query = "select * from EQUIPAMENTO";
+                                                        $resultado = mysqli_query($conexao, $query);
 
-                                            function buscaEquipamento($conexao) {
+                                                        while ($row = mysqli_fetch_assoc($resultado)) {
 
-                                               $query = "select codCoord, nome, marca, tombo, dataAquisicao, modelo, cor from EQUIPAMENTO where codCoord = '" . $_POST['coordenacao'] . "'";
 
-                                               // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip";
-
-                                               // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
-                                                
-                                                $resultado = mysqli_query($conexao, $query);
-                                                $equipamento = array();
-
-                                                while ($atual = mysqli_fetch_assoc($resultado)) {
-                                                    #var_dump($atual);
-                                                    array_push($equipamento, $atual);
-                                                }
-                                                return $equipamento;
-                                            }
-
-                                            $equipamento = buscaEquipamento($conexao);
-                                            ?>
-
-                                            <label><br>Equipamentos Disponíveis</label>
-                                            <select type="text" id="soflow" name="equipamento" required class="form-control">
-                                                <option value="">      Equipamento</option>
-
-                                                <?php foreach ($equipamento as $equip) : ?>
-                                                    <option value="<?= $equip['codEquip'] ?>"><?= $equip['nome'] ?>__________<?= $equip['marca'] ?>__________<?= $equip['modelo'] ?>__________<?= $equip['cor'] ?>__________<?= $equip['dataAquisicao'] ?>  </option>
-                                                <?php endforeach; ?>			   
-                                            </select>
-
-                                            <button type="submit" class="" >Reservar</button>
-                                        </form><!-- /form -->
+                                                            echo '<td>' . $row['codEquip'] . '</td>';
+                                                            echo '<td>' . $row['nome'] . '</td>';
+                                                            echo '<td>' . $row['marca'] . '</td>';
+                                                            echo '<td>' . $row['modelo'] . '</td>';
+                                                            echo '<td>' . $row['dataAquisicao'] . '</td>';
+                                                            echo '</tr>';
+                                                        }
+                                                        //echo '</tbody></table>';
+                                                        ?>
+                                                </tbody>
+                                            </table>
                                     </div>
-
                                 </div>
 
+
+
+
+
+
+                                <button type="submit" class="btn btn-lg btn-primary" >Reservar</button>
+                                </form><!-- /form -->
                             </div>
+
                         </div>
 
                     </div>
                 </div>
 
             </div>
-
         </div>
 
-    </body>
+    </div>
+
+</div>
+
+</body>
 
 </html>
 

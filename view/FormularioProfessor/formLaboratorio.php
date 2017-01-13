@@ -123,6 +123,13 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
+
+                                    <a href="">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
                                     <a href="formEditarProfessor.php">
                                         Conta
                                     </a>

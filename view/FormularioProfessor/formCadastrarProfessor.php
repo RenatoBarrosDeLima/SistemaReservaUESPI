@@ -22,9 +22,7 @@
 
 
     </head>
-
-
-
+  
     <body>
 
         <div class="pad">
@@ -41,7 +39,7 @@
                     <input type="text" id="inputNome" name="matricula" class="form-control" placeholder="Matricula" required  autofocus>
                     <input type="text" id="inputMatricula" name="nome" class="form-control" placeholder="Nome"  required>
                     <input type="text" id="inputEndereco" name="endereco" class="form-control" placeholder="Endereço" required>
-                    <input type="text" id="inputEndereco" name="telefone" class="form-control" placeholder="Telefone"required >
+                    <input type="text" id="inputEmail" name="telefone" class="form-control" placeholder="Telefone"  required>
                     <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email"  required>
                     <input type="password" id="inputSenha" name="senha" class="form-control" placeholder="Senha" required>
 
