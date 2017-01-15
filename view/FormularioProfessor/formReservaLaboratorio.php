@@ -151,12 +151,12 @@ if (!isset($_SESSION['Matricula'])) {
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">SOLICITAÇÃO DE RESERVA - EQUIPAMENTO</h4>
+                                        <h4 class="title">SOLICITAÇÃO DE RESERVA - LABORATÓRIO</h4>
 
 
                                     </div>
                                     <div class="content">
-                                        <form class="form-signin" id="formulario" action= "formEquipamentoDisponivel.php" method="post">
+                                        <form class="form-signin" id="formulario" action= "formLaboratorioDisponivel.php" method="post">
 
                                             <label><br>Data de Reserva</label>
                                             <input type="date" id="inputDataAquisio" name="data" class="form-control" placeholder="dd/mm/yyyy" required></br>

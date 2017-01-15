@@ -76,7 +76,7 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratório</p>
                             </a>

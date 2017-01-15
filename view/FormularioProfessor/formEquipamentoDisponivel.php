@@ -194,6 +194,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                     array_push($final, $equipamento[$i]['codEquip']);
                                                 }
                                             }
+                                            
                                             error_reporting(E_ERROR | E_PARSE);
                                             $cont = count($equipamento);
                                             for ($i = 0; $i < $cont; $i++) {
@@ -232,8 +233,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                         } else {
                                                             $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE s.codCoord = $coordenacaoP)";
                                                         }
-//$query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
-
+                                                        
                                                         $resultado = mysqli_query($conexao, $query);
 
 
