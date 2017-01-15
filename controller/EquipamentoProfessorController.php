@@ -38,7 +38,6 @@ foreach ($equipamento as $equip) :
     }
     ?>
 <?php endforeach; ?>			   
-</select>
 
 
 
@@ -60,7 +59,8 @@ class EquipamentoProfessorController {
 
     private function incluirEq() {
         //$this->cadastro->setCod($_POST['matricula']);
-        $this->cadastro->setCodEquip($_POST['equipamento']);
+        
+        $this->cadastro->setCodEquip($_POST['CodEquipamento']);
         $this->cadastro->setCodProf($_POST['professor']);
         $this->cadastro->setDataEmp($_POST['data']);
         $this->cadastro->setHoraEmp($_POST['hora']);

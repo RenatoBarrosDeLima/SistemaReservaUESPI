@@ -1,3 +1,17 @@
+<?php
+// A sessão precisa ser iniciada em cada página diferente
+if (!isset($_SESSION))
+    session_start();
+
+// Verifica se não há a variável da sessão que identifica o usuário
+if (!isset($_SESSION['Matricula'])) {
+    // Destrói a sessão por segurança
+    session_destroy();
+    // Redireciona o visitante de volta pro login
+    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
+    exit;
+}
+?>
 <?php include 'conn.php'; ?>
 <!doctype html>
 
@@ -37,12 +51,42 @@
 
                     <input type="hidden" id="action" name="editar" />    
 
+                    <?php
+                    $host = "localhost";
+                    $user = "root";
+                    $pass = "";
+                    $banco = "BANCORESERVA";
 
-                    <input type="text" id="inputNom" name="nome" class="form-control" placeholder="Nome"  required>
-                    <input type="text" id="inputEndereco" name="endereco" class="form-control" placeholder="Endereço" required>
-                    <input type="text" id="inputTell" name="telefone" class="form-control" placeholder="Telefone"required >
-                    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email"  required>
-                    <input type="password" id="inputSenha" name="senha" class="form-control" placeholder="Senha" required>
+                    $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+
+
+
+                    $query = "select codProf, nome, email, endereco, telefone, senha from PROFESSOR where codProf = '" . $_SESSION['Matricula'] . "'";
+
+
+                    $resultado = mysqli_query($conexao, $query);
+                    $professor = array();
+
+                    while ($atual = mysqli_fetch_assoc($resultado)) {
+                        #var_dump($atual);
+                        array_push($professor, $atual);
+                    }
+                    foreach ($professor as $prof) :
+                        $nomeProfessor = $prof['nome'];
+                        $enderecoProfessor = $prof['endereco'];
+                        $telefoneProfessor = $prof['telefone'];
+                        $emailProfessor = $prof['email'];
+                        $senhaProfessor = $prof['senha'];
+
+                    endforeach;
+                    ?>
+
+                    <input type="text" id="inputNome" name="nome" value="<?php echo $nomeProfessor ?>" class="form-contro" placeholder="Nome" required>
+                    <input type="text" id="inputEndereco" name="endereco" value="<?php echo $enderecoProfessor ?>" class="form-control" placeholder="Endereço" required>
+                    <input type="text" id="inputTelefone" name="telefone" value="<?php echo $telefoneProfessor ?>" class="form-control" placeholder="Telefone"required >
+                    <input type="email" id="inputEmail" name="email" value="<?php echo $emailProfessor ?>" class="form-control" placeholder="Email"  required>
+                    <input type="password" id="inputSenha" name="senha" value="<?php echo $senhaProfessor ?>"class="form-control" placeholder="Senha" required>
+                    <input type="password" id="inputSenhaConfirma" name="confirmaSenha" value="<?php echo $senhaProfessor ?>"class="form-control" placeholder="Confirme a Senha" required>
 
 
 
@@ -117,25 +161,6 @@
 
 
                 </form><!-- /form -->
-
-
-
-
-
-                <form class="form-signin" id="formulario" action= "../../controller/ExcluirProfessorController.php" method="post">
-
-                    <input type="hidden" id="action" name="excluir" />    
-
-                    <button name="editar" type="submit" class="btn btn-lg btn-primary btn-block btn-signin" >Excluir Cadastro ?</button>
-
-
-                </form><!-- /form -->
-
-
-
-
-
-
 
 
                 <a href='../../model/Logout.php' class="forgot-password">

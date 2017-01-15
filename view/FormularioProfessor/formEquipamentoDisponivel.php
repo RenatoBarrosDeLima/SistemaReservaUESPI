@@ -1,5 +1,20 @@
 <!doctype html>
+<?php include 'conn.php'; ?>
 
+<?php
+// A sessão precisa ser iniciada em cada página diferente
+if (!isset($_SESSION))
+    session_start();
+
+// Verifica se não há a variável da sessão que identifica o usuário
+if (!isset($_SESSION['Matricula'])) {
+    // Destrói a sessão por segurança
+    session_destroy();
+    // Redireciona o visitante de volta pro login
+    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
+    exit;
+}
+?>
 
 <html lang="pt-BR">
     <head>
@@ -44,10 +59,41 @@
 
                 <div class="sidebar-wrapper">
 
-
+                    <div class="logo">
+                        <a href="http://www.uespi.br/site" target="_blank" class="simple-text">
+                            Site Da Instituição
+                        </a>
+                    </div>
 
                     <ul class="nav">
+                        <li>
+                            <a href="formProfessorInicio.php">
+                                <i class="pe-7s-graph"></i>
+                                <p>Inicio</p>
+                            </a>
+                        </li>
 
+
+                        <li>
+                            <a href="formReservaEquipamento.php">
+                                <i class="pe-7s-video"></i>
+                                <p>Reservar Equipamentos</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formLaboratorio.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Reservar Laboratório</p>
+                            </a>
+                        </li>
+
+                        <li class="active-pro">
+                            <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
+                                <i class="pe-7s-rocket"></i>
+                                <p>Site Da Instituição</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -78,6 +124,24 @@
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
+                                <li>
+
+                                    <a href="">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="">
+                                        Conta
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+
+                                    <a href="../../pagina1.php">
+                                        Sair
+                                    </a>
+                                </li>
 
                             </ul>
                         </div>
@@ -96,6 +160,39 @@
                                     </div>
                                     <div class="content">
                                         <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
+                                            <?php
+                                            $DataEmp = $_POST['data'];
+                                            $HoraEmp = $_POST['hora'];
+
+                                            $host = "localhost";
+                                            $user = "root";
+                                            $pass = "";
+                                            $banco = "BANCORESERVA";
+
+                                            $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+
+                                            function buscaEquipamento($conexao) {
+
+                                                $query1 = "select codEquip from EQUIP_PROF where dataEmp = '" . $_POST['data'] . "' AND horaEmp = '" . $_POST['hora'] . "' ";
+                                                $resultado1 = mysqli_query($conexao, $query1);
+
+                                                $equipamento = array();
+
+                                                while ($atual = mysqli_fetch_assoc($resultado1)) {
+                                                    #var_dump($atual);
+                                                    array_push($equipamento, $atual);
+                                                }
+                                                return $equipamento;
+                                            }
+
+                                            $equipamento = buscaEquipamento($conexao);
+
+                                            if (count($equipamento) >= 1) {
+
+                                                $valor = $equipamento;
+                                                $final = $equipamento[0]['codEquip'];
+                                            }
+                                            ?>
 
 
                                             <table class="table">
@@ -111,42 +208,46 @@
                                                 </thead>
 
                                                 <tbody>
+
                                                     <tr>
-
-
                                                         <?php
-                                                        $host = "localhost";
-                                                        $user = "root";
-                                                        $pass = "";
-                                                        $banco = "BANCORESERVA";
+                                                        error_reporting(E_ERROR | E_PARSE);
+                                                        if ($final != NULL) {
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $final)";
+                                                        } else {
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c)";
+                                                        }
+//$query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
 
-                                                        $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-
-                                                        $query = "select * from EQUIPAMENTO";
                                                         $resultado = mysqli_query($conexao, $query);
 
+
                                                         while ($row = mysqli_fetch_assoc($resultado)) {
+                                                            error_reporting(E_ERROR | E_PARSE);
 
+                                                            if ($row['dataEmp'] != $_POST['data'] and $row['horaEmp'] != $_POST['hora']) {
 
-                                                            echo '<td>' . $row['codEquip'] . '</td>';
-                                                            echo '<td>' . $row['nome'] . '</td>';
-                                                            echo '<td>' . $row['marca'] . '</td>';
-                                                            echo '<td>' . $row['modelo'] . '</td>';
-                                                            echo '<td>' . $row['dataAquisicao'] . '</td>';
-                                                            echo '</tr>';
+                                                                echo '<td>' . $row['codEquip'] . '</td>';
+                                                                echo '<td>' . $row['nome'] . '</td>';
+                                                                echo '<td>' . $row['marca'] . '</td>';
+                                                                echo '<td>' . $row['modelo'] . '</td>';
+                                                                echo '<td>' . $row['dataAquisicao'] . '</td>';
+                                                                echo '</tr>';
+                                                            }
+                                                            //echo '</tbody></table>';
                                                         }
-                                                        //echo '</tbody></table>';
                                                         ?>
                                                 </tbody>
                                             </table>
                                     </div>
                                 </div>
 
-
-
-
-
-
+                                <input type="hidden" name="data" value="<?php echo $_POST['data']; ?>">
+                                <input type="hidden" name="hora" value="<?php echo $_POST['hora']; ?>">
+                                <input type="hidden" name="status" value="1" >
+                                <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
+                                <input type="number" id="inputNome" name="CodEquipamento" value="CodEquipamento"class="form-control" placeholder="Informe o Código do Equipamento" required  autofocus>
+                                <br>
                                 <button type="submit" class="btn btn-lg btn-primary" >Reservar</button>
                                 </form><!-- /form -->
                             </div>
