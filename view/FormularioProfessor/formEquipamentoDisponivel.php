@@ -212,10 +212,11 @@ if (!isset($_SESSION['Matricula'])) {
                                                     <tr>
                                                         <?php
                                                         error_reporting(E_ERROR | E_PARSE);
+                                                        $coordenacaoP = $_SESSION['Codigo'];
                                                         if ($final != NULL) {
-                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $final)";
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $final AND s.codCoord = $coordenacaoP)";
                                                         } else {
-                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c)";
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE s.codCoord = $coordenacaoP)";
                                                         }
 //$query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
 
@@ -225,15 +226,13 @@ if (!isset($_SESSION['Matricula'])) {
                                                         while ($row = mysqli_fetch_assoc($resultado)) {
                                                             error_reporting(E_ERROR | E_PARSE);
 
-                                                            if ($row['dataEmp'] != $_POST['data'] and $row['horaEmp'] != $_POST['hora']) {
 
-                                                                echo '<td>' . $row['codEquip'] . '</td>';
-                                                                echo '<td>' . $row['nome'] . '</td>';
-                                                                echo '<td>' . $row['marca'] . '</td>';
-                                                                echo '<td>' . $row['modelo'] . '</td>';
-                                                                echo '<td>' . $row['dataAquisicao'] . '</td>';
-                                                                echo '</tr>';
-                                                            }
+                                                            echo '<td>' . $row['codEquip'] . '</td>';
+                                                            echo '<td>' . $row['nome'] . '</td>';
+                                                            echo '<td>' . $row['marca'] . '</td>';
+                                                            echo '<td>' . $row['modelo'] . '</td>';
+                                                            echo '<td>' . $row['dataAquisicao'] . '</td>';
+                                                            echo '</tr>';
                                                             //echo '</tbody></table>';
                                                         }
                                                         ?>

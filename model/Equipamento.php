@@ -77,7 +77,6 @@ class Equipamento extends Banco {
 
         return $result;
     }
-
 }
 
 ?>
