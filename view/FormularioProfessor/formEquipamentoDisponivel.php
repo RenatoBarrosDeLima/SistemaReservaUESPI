@@ -186,11 +186,24 @@ if (!isset($_SESSION['Matricula'])) {
                                             }
 
                                             $equipamento = buscaEquipamento($conexao);
+                                            $final = array();
 
-                                            if (count($equipamento) >= 1) {
+                                            if (count($equipamento) > 0) {
+                                                for ($i = 0; $i < count($equipamento); $i++) {
 
-                                                $valor = $equipamento;
-                                                $final = $equipamento[0]['codEquip'];
+                                                    array_push($final, $equipamento[$i]['codEquip']);
+                                                }
+                                            }
+                                            error_reporting(E_ERROR | E_PARSE);
+                                            $cont = count($equipamento);
+                                            for ($i = 0; $i < $cont; $i++) {
+                                                if ($i < $cont - 1) {
+
+                                                    $camposQuery .= $equipamento[$i]['codEquip'] . " AND c.codEquip != ";
+                                                } else {
+
+                                                    $camposQuery .= $equipamento[$i]['codEquip'];
+                                                }
                                             }
                                             ?>
 
@@ -214,7 +227,8 @@ if (!isset($_SESSION['Matricula'])) {
                                                         error_reporting(E_ERROR | E_PARSE);
                                                         $coordenacaoP = $_SESSION['Codigo'];
                                                         if ($final != NULL) {
-                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $final AND s.codCoord = $coordenacaoP)";
+
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $camposQuery AND s.codCoord = $coordenacaoP)";
                                                         } else {
                                                             $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE s.codCoord = $coordenacaoP)";
                                                         }
