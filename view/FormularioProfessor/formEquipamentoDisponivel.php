@@ -82,9 +82,15 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratório</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
                             </a>
                         </li>
 
@@ -126,13 +132,13 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
 
-                                    <a href="">
+                                    <a href="formEditarProfessor.php">
                                         <?php echo "" . $_SESSION['Nome']; ?>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="">
+                                    <a href="formEditarProfessor.php">
                                         Conta
                                     </a>
                                 </li>
@@ -194,7 +200,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                     array_push($final, $equipamento[$i]['codEquip']);
                                                 }
                                             }
-                                            
+
                                             error_reporting(E_ERROR | E_PARSE);
                                             $cont = count($equipamento);
                                             for ($i = 0; $i < $cont; $i++) {
@@ -233,7 +239,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                         } else {
                                                             $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE s.codCoord = $coordenacaoP)";
                                                         }
-                                                        
+
                                                         $resultado = mysqli_query($conexao, $query);
 
 

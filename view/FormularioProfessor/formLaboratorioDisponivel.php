@@ -87,6 +87,12 @@ if (!isset($_SESSION['Matricula'])) {
                                 <p>Reservar Laboratório</p>
                             </a>
                         </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
+                            </a>
+                        </li>
 
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">

@@ -79,9 +79,15 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratório</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
                             </a>
                         </li>
 
@@ -123,13 +129,13 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
 
-                                    <a href="">
+                                    <a href="formEditarProfessor.php">
                                         <?php echo "" . $_SESSION['Nome']; ?>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="">
+                                    <a href="formEditarProfessor.php">
                                         Conta
                                     </a>
                                 </li>
