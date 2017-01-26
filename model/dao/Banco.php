@@ -71,6 +71,7 @@ class Banco {
         return $this->result;
     }
 
+
 }
 
 ?>

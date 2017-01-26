@@ -85,7 +85,7 @@ if (!isset($_SESSION['Matricula'])) {
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="formHistoricoEquipamento.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Histórico de Reserva</p>
                             </a>
@@ -136,7 +136,7 @@ if (!isset($_SESSION['Matricula'])) {
 
                                 <li>
                                     <a href="formEditarProfessor.php">
-                                        Conta
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
@@ -154,7 +154,7 @@ if (!isset($_SESSION['Matricula'])) {
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <div class="card">
                                     <div class="header">
                                         <h4 class="title">SOLICITAÇÃO DE RESERVA - LABORATÓRIO</h4>

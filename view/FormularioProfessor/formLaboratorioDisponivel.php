@@ -82,13 +82,13 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratório</p>
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="formHistoricoEquipamento.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Histórico de Reserva</p>
                             </a>
@@ -132,14 +132,14 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
 
-                                    <a href="">
+                                    <a href="formEditarProfessor.php">
                                         <?php echo "" . $_SESSION['Nome']; ?>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="">
-                                        Conta
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
@@ -157,7 +157,7 @@ if (!isset($_SESSION['Matricula'])) {
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <div class="card">
                                     <div class="header">
                                         <h4 class="title">LABORATÓRIOS DISPONÍVEIS</h4>

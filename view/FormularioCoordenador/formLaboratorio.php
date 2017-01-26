@@ -15,10 +15,6 @@ if (!isset($_SESSION['Matricula'])) {
 }
 ?>
 
-<h1><center>Acesso Restrito</center></h1>
-<p><center>Olá, <?php echo $_SESSION['Nome']; ?>!</center></p>
-
-
 <html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
@@ -65,6 +61,7 @@ if (!isset($_SESSION['Matricula'])) {
 
                     <ul class="nav">
                         <li>
+                        <li>
                             <a href="formCoordenador.php">
                                 <i class="pe-7s-graph"></i>
                                 <p>Inicio</p>
@@ -83,6 +80,39 @@ if (!isset($_SESSION['Matricula'])) {
                             <a href="formLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Cadastro De Laboratórios</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formExcluirProfessor.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Excluir Professor</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaEquipamento.php">
+                                <i class="pe-7s-video"></i>
+                                <p>Reservar Equipamento</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaLaboratorio.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Reservar Laboratórios</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formHistoricoEquipamento.php">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
+                            </a>
+                        </li>
+
+                        <li class="active-pro">
+                            <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
+                                <i class="pe-7s-rocket"></i>
+                                <p>Site Da Instituição</p>
                             </a>
                         </li>
 
@@ -122,10 +152,15 @@ if (!isset($_SESSION['Matricula'])) {
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
 
                                 <li>
-                                    <a href="">
-                                        Account
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">

@@ -43,7 +43,7 @@
                     Cadastrar ?
                 </a>
                 <br>
-                <a href="recuperarSenha" class="forgot-password">
+                <a href="recuperarSenha.php" class="forgot-password">
                     Recuperar senha ?
 
                 </a>

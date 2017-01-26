@@ -88,7 +88,7 @@ if (!isset($_SESSION['Matricula'])) {
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="formHistoricoEquipamento.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Histórico de Reserva</p>
                             </a>
@@ -169,19 +169,41 @@ if (!isset($_SESSION['Matricula'])) {
                                             <?php
                                             $DataEmp = $_POST['data'];
                                             $HoraEmp = $_POST['hora'];
-
+                                       
                                             $host = "localhost";
                                             $user = "root";
                                             $pass = "";
                                             $banco = "BANCORESERVA";
 
                                             $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+					                        function ultimoCodigo($conexao){
+                                              $ultimo = "select codEquip from EQUIPAMENTO where codEquip = (SELECT MAX(codEquip) FROM EQUIPAMENTO)";
+                                                $resultadoCod = mysqli_query($conexao, $ultimo);
+						
+
+                                                $ultimoCod = array();
+
+                                                while ($atual = mysqli_fetch_assoc($resultadoCod)) {
+                                                    #var_dump($atual);
+                                                    array_push($ultimoCod, $atual);
+                                                }
+                                                return $ultimoCod;
+                                            }
+                       
+                                            $teste = ultimoCodigo($conexao);
+					                        $cont1 = count($teste);
+                                             for ($i = 0; $i < $cont1; $i++) {
+                                                
+                                               //echo "olá "+$teste[$i]['codEquip'];
+                                            }
+                                           
+                                            
 
                                             function buscaEquipamento($conexao) {
 
                                                 $query1 = "select codEquip from EQUIP_PROF where dataEmp = '" . $_POST['data'] . "' AND horaEmp = '" . $_POST['hora'] . "' ";
                                                 $resultado1 = mysqli_query($conexao, $query1);
-
+						
                                                 $equipamento = array();
 
                                                 while ($atual = mysqli_fetch_assoc($resultado1)) {

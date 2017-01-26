@@ -1,3 +1,17 @@
+<?php
+// A sessão precisa ser iniciada em cada página diferente
+if (!isset($_SESSION))
+    session_start();
+
+// Verifica se não há a variável da sessão que identifica o usuário
+if (!isset($_SESSION['Matricula'])) {
+    // Destrói a sessão por segurança
+    session_destroy();
+    // Redireciona o visitante de volta pro login
+    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
+    exit;
+}
+?>
 <!doctype html>
 
 
@@ -67,6 +81,38 @@
                                 <p>Cadastro De Laboratórios</p>
                             </a>
                         </li>
+                        <li>
+                            <a href="formDevolucao.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Devolução</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formExcluirProfessor.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Excluir Professor</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaEquipamento.php">
+                                <i class="pe-7s-video"></i>
+                                <p>Reservar Equipamento</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaLaboratorio.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Reservar Laboratórios</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formHistoricoEquipamento.php">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
+                            </a>
+                        </li>
 
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
@@ -106,8 +152,14 @@
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
-                                    <a href="">
-                                        Conta
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
